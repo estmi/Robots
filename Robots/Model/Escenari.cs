@@ -1,15 +1,13 @@
-﻿using System;
+﻿using Robots.Model;
+using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Windows.Controls;
-using System.Windows.Media;
-using Robots.Model;
 
 namespace Robots
 {
     public class Escenari : Grid
     {
-        
+
         Random _random = new();
         /// <summary>
         /// Crea un escenari donades unes mides
@@ -27,8 +25,8 @@ namespace Robots
                 ColumnDefinitions.Add(new());
             }
 
-            Files = files; 
-            Columnes = columnes; 
+            Files = files;
+            Columnes = columnes;
             Tauler = new Posicio[Files, Columnes];
             for (int i = 0; i < Tauler.GetLength(0); i++)
             {
@@ -38,9 +36,31 @@ namespace Robots
                     PosaPosicio(Tauler[i, j]);
                 }
             }
-            
+            CreaTresor();
+            CreaRobot();
+
         }
-       
+
+        private void CreaRobot()
+        {
+            List<Posicio> l = LlistaPosicionsBuides;
+            Posicio p = l[_random.Next(l.Count)];
+            Buida(p.Fila, p.Columna);
+            Robot r = new(p.Fila, p.Columna);
+            posicios[0] = r;
+            Posa(r);
+        }
+
+        private void CreaTresor()
+        {
+            List<Posicio> l = LlistaPosicionsBuides;
+            Posicio p = l[_random.Next(l.Count)];
+            Buida(p.Fila, p.Columna);
+            Tresor t = new(p.Fila, p.Columna);
+            posicios[1] = t;
+            Posa(t);
+        }
+
         /// <summary>
         /// Retorna el número de files de l'escenari
         /// </summary>
@@ -49,7 +69,7 @@ namespace Robots
         /// Retorna el número de columnes de l'escenari
         /// </summary>
         public int Columnes { get; }
-        
+
         /// <summary>
         /// Obte una matriu de tot l'escenari
         /// </summary>
@@ -63,25 +83,25 @@ namespace Robots
         /// <param name="colOrig">Columna de la coordenada d'origen</param>
         /// <param name="filDesti">Fila de la coordenada de destí</param>
         /// <param name="colDesti">Columna de la coordenada de destí</param>
-        private void Mou(int filOrig, int colOrig, int filDesti, int colDesti) 
+        private void Mou(int filOrig, int colOrig, int filDesti, int colDesti)
         {
             Posicio p = Tauler[filOrig, colOrig];
             Tauler[filDesti, colDesti] = p;
-            Tauler[filOrig, colOrig] = new(filOrig,colOrig);
+            Tauler[filOrig, colOrig] = new(filOrig, colOrig);
             SetRow(p, filDesti);
             SetColumn(p, colDesti);
         }
         /// <summary>
         /// Retorna la Posició que hi ha en una coordenada donada
         /// </summary>
-        public Posicio this[int fila, int col] => Tauler[fila,col];
+        public Posicio this[int fila, int col] => Tauler[fila, col];
         /// <summary>
         /// Mira si una coordenada es correcte per ser destí d'una persona
         /// </summary>
         /// <param name="fil">fila de la coordenada</param>
         /// <param name="col">columna de la coordenada</param>
         /// <returns>retorna si la coordenada és vàlida i està buida</returns>
-        public bool DestiValid(int fil, int col) 
+        public bool DestiValid(int fil, int col)
         {
             if (0 <= fil && fil < Files && 0 <= col && col < Columnes)
             {
@@ -89,18 +109,18 @@ namespace Robots
             }
             return false;
         }
-        
+
         /// <summary>
         /// Elimina una persona de l'escenari i de la taula de persones
         /// </summary>
         /// <param name="fil">Fila on està la persona</param>
         /// <param name="col">Columna on està la persona</param>
-        public void Buida(int fil, int col) 
+        public void Buida(int fil, int col)
         {
             if (!Tauler[fil, col].EsBuida)
             {
                 Children.Remove(Tauler[fil, col]);
-                Tauler[fil, col] = new(fil,col);
+                Tauler[fil, col] = new(fil, col);
             }
         }
         /// <summary>
@@ -122,7 +142,7 @@ namespace Robots
                 }
                 return llista;
             }
-            
+
         }
         #region Creació i posicionament de persones
         /// <summary>
@@ -157,16 +177,6 @@ namespace Robots
         {
             Buida(pers.Fila, pers.Columna);
         }
-        /// <summary>
-        /// Obté un nom d'un fitxer de noms que no s'estigui fent servir
-        /// </summary>
-        /// <param name="fitxer">Fitxer de noms</param>
-        /// <returns>El nom triat</returns>
-        private String ObteNom(String fitxer)
-        {
-            //No s'utilitza perque ja assigno els noms automaticament de l'arxiu
-            return null;
-        }
 
         #endregion
 
@@ -174,10 +184,11 @@ namespace Robots
         /// <summary>
         /// Fa que totes les persones facin un moviment
         /// </summary>
-        public void Cicle() 
+        public void Cicle()
         {
             foreach (Posicio kvp in posicios)
-            {if (kvp.EsRobot)
+            {
+                if (kvp.EsRobot)
                 {
                     Direccio direccio = kvp.OnVaig(this);
                     switch (direccio)
@@ -211,7 +222,7 @@ namespace Robots
                     }
                 }
             }
-            
+
         }
     }
 }

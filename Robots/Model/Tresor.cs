@@ -8,12 +8,12 @@ namespace Robots.Model
     {
         public Tresor(int fil, int col) : base(fil: fil, col: col)
         {
-            Icona = (BitmapImage)Resources.FindName("imgPokeballKey");
+            Icona = (BitmapImage)FindResource("imgPokeballKey");
         }
         public override bool EsBuida => false;
         public override bool EsRobot => false;
         public override bool EsTresor => true;
-        public Direccio OnVaig(Escenari esc)
+        public override Direccio OnVaig(Escenari esc)
         {
             List<Direccio> llista = new() { Direccio.Quiet };
             double gran = Atraccio(Fila, Columna, esc);

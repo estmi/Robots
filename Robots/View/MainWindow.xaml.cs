@@ -13,16 +13,20 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Robots
+namespace Robots.View
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
+        ViewModel.ViewModelClass viewModelClass = new();
         public MainWindow()
         {
             InitializeComponent();
+            grd.Children.Add(viewModelClass.esc);
+            Grid.SetRow(viewModelClass.esc, 0);
+            Grid.SetColumn(viewModelClass.esc, 1);
         }
     }
 }

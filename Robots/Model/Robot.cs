@@ -11,13 +11,14 @@ namespace Robots.Model
     {
         public Robot(int fil,int col):base(fil:fil,col:col)
         {
-            Icona = (BitmapImage)Resources.FindName("imgPickachuKey");
+            object data = FindResource("imgPickachuKey");
+            Icona = (BitmapImage)data;
         }
         public override bool EsBuida => false;
         public override bool EsRobot => true;
         public override bool EsTresor => false;
         
-        public Direccio OnVaig(Escenari esc)
+        public override Direccio OnVaig(Escenari esc)
         {
             List<Direccio> llista = new() { Direccio.Quiet };
             double gran = Atraccio(Fila, Columna, esc);
@@ -93,6 +94,11 @@ namespace Robots.Model
 
             return llista[random.Next(llista.Count)];
         }
-
+        public override double Interes(Posicio p)
+        {
+            if (p.EsTresor)
+                return 1;
+            return 0;
+        }
     }
 }

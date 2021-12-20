@@ -23,8 +23,7 @@ namespace Robots.Model
             Columna = col;
             Fila = fil;
             dock.Children.Add(imgIcona);
-            AllowDrop = true;
-            DragEnter += Posicio_DragEnter;
+            
 
         }
         public static double Distancia(Posicio pos1, Posicio pos2) =>
@@ -37,18 +36,7 @@ namespace Robots.Model
                     2)
                 );
 
-        private void Posicio_DragEnter(object sender, System.Windows.DragEventArgs e)
-        {
-            if (e.Data.GetDataPresent("PERSONA"))
-            {
-
-            }
-            else if (e.Data.GetDataPresent("PERSONATIPUS"))
-            {
-
-            }
-            else e.Effects = DragDropEffects.None;
-        }
+        
         /// <summary>
         /// Assigna o obté la columna de la posicio
         /// </summary>
