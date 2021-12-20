@@ -1,22 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 
 namespace Robots.Model
 {
-    public  class Robot:Posicio
+    public class Tresor : Posicio
     {
-        public Robot(int fil,int col):base(fil:fil,col:col)
+        public Tresor(int fil, int col) : base(fil: fil, col: col)
         {
-            Icona = (BitmapImage)Resources.FindName("imgPickachuKey");
+            Icona = (BitmapImage)Resources.FindName("imgPokeballKey");
         }
         public override bool EsBuida => false;
-        public override bool EsRobot => true;
-        public override bool EsTresor => false;
-        
+        public override bool EsRobot => false;
+        public override bool EsTresor => true;
         public Direccio OnVaig(Escenari esc)
         {
             List<Direccio> llista = new() { Direccio.Quiet };
@@ -93,6 +89,5 @@ namespace Robots.Model
 
             return llista[random.Next(llista.Count)];
         }
-
     }
 }

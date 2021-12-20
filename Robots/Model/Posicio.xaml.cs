@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace Robots
+namespace Robots.Model
 {
     /// <summary>Classe base per a totes les caselles de l'escenari.</summary>
     public partial class Posicio : UserControl
@@ -16,10 +16,10 @@ namespace Robots
         /// </summary>
         /// <param name="fil">Fila de la Posició</param>
         /// <param name="col">Columna de la Posició</param>
-        public Posicio(string nom = "", int fil = 0, int col = 0)
+        public Posicio(int fil = 0, int col = 0)
         {
             InitializeComponent();
-            Nom = nom;
+            
             Columna = col;
             Fila = fil;
             dock.Children.Add(imgIcona);
@@ -27,7 +27,15 @@ namespace Robots
             DragEnter += Posicio_DragEnter;
 
         }
-
+        public static double Distancia(Posicio pos1, Posicio pos2) =>
+            Math.Sqrt(
+                Math.Pow(
+                    Math.Abs(pos1.Columna - pos2.Columna),
+                    2) +
+                Math.Pow(
+                    Math.Abs(pos1.Fila - pos2.Fila),
+                    2)
+                );
 
         private void Posicio_DragEnter(object sender, System.Windows.DragEventArgs e)
         {
@@ -41,11 +49,6 @@ namespace Robots
             }
             else e.Effects = DragDropEffects.None;
         }
-
-        /// <summary>
-        /// Obté o assigna el nom de la posició
-        /// </summary>
-        public string Nom { get; set; }
         /// <summary>
         /// Assigna o obté la columna de la posicio
         /// </summary>
@@ -69,7 +72,20 @@ namespace Robots
             set { imgIcona.Source = value; }
 
         }
+        public virtual double Interes(Posicio p) => 0;
+        public virtual Direccio OnVaig(Escenari esc) => 0;
+        protected double Atraccio(int fil, int col, Escenari esc)
+        {
+            double atraccio = 0;
+            foreach (Posicio p in esc.posicios)
+            {
 
+                if (p.Columna != col && p.Fila != fil)
+                    atraccio += Interes(p) / Distancia(esc[fil, col], p);
+            }
+            //return Interes(esc[fil, col]) / Distancia(this, new("", fil, col));
+            return atraccio;
+        }
 
 
     }

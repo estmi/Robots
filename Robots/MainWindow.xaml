@@ -7,6 +7,11 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Image Source="{Binding Path=imgPickachuKey}"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Image Source="{StaticResource imgPickachuKey}" Grid.Row="0" Grid.Column="0"/>
+        <Image Source="{StaticResource imgPokeballKey}" Grid.Row="0" Grid.Column="1"/>
     </Grid>
 </Window>
