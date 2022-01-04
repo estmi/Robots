@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Robots.Model
+﻿namespace Robots.Model
 {
     /// <summary>
     /// Enumeracio de les possibles direccions d'una persona
     /// </summary>
-    public enum Direccio { Quiet, Nord, Nordest, Est, Sudest, Sud, Sudoest, Oest, Noroest }
+    public enum Direccio { Quiet, Nord, Est, Sud, Oest }
     /// <summary>
     /// Enumeracio dels limits d'un escenari a la configuracio inicial
     /// </summary>

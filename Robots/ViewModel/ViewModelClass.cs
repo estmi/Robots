@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Robots.Infrastructure;
+using Robots.Model;
+using System;
 
 namespace Robots.ViewModel
 {
@@ -10,10 +8,12 @@ namespace Robots.ViewModel
     {
         public ViewModelClass()
         {
-            esc.ShowGridLines = true;
+            Esc = new(10, 10);
+            Esc.ShowGridLines = true;
+            CicleCommand = new(o => Esc.Cicle());
         }
 
-        public Escenari esc { get; set; } = new(10, 10);
-
+        public Escenari Esc { get; set; }
+        public RelayCommand CicleCommand { get; private set; }
     }
 }

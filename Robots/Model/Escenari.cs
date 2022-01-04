@@ -1,9 +1,8 @@
-﻿using Robots.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Windows.Controls;
 
-namespace Robots
+namespace Robots.Model
 {
     public class Escenari : Grid
     {
@@ -86,8 +85,11 @@ namespace Robots
         private void Mou(int filOrig, int colOrig, int filDesti, int colDesti)
         {
             Posicio p = Tauler[filOrig, colOrig];
+            Elimina(Tauler[filDesti, colDesti]);
             Tauler[filDesti, colDesti] = p;
             Tauler[filOrig, colOrig] = new(filOrig, colOrig);
+            p.Columna = colDesti;
+            p.Fila = filDesti;
             SetRow(p, filDesti);
             SetColumn(p, colDesti);
         }
@@ -196,27 +198,19 @@ namespace Robots
                         case Direccio.Nord:
                             Mou(kvp.Fila, kvp.Columna, kvp.Fila - 1, kvp.Columna);
                             break;
-                        case Direccio.Nordest:
-                            Mou(kvp.Fila, kvp.Columna, kvp.Fila - 1, kvp.Columna + 1);
-                            break;
+
                         case Direccio.Est:
                             Mou(kvp.Fila, kvp.Columna, kvp.Fila, kvp.Columna + 1);
                             break;
-                        case Direccio.Sudest:
-                            Mou(kvp.Fila, kvp.Columna, kvp.Fila + 1, kvp.Columna + 1);
-                            break;
+
                         case Direccio.Sud:
                             Mou(kvp.Fila, kvp.Columna, kvp.Fila + 1, kvp.Columna);
                             break;
-                        case Direccio.Sudoest:
-                            Mou(kvp.Fila, kvp.Columna, kvp.Fila + 1, kvp.Columna - 1);
-                            break;
+
                         case Direccio.Oest:
                             Mou(kvp.Fila, kvp.Columna, kvp.Fila, kvp.Columna - 1);
                             break;
-                        case Direccio.Noroest:
-                            Mou(kvp.Fila, kvp.Columna, kvp.Fila - 1, kvp.Columna - 1);
-                            break;
+
                         default:
                             break;
                     }

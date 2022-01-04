@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
@@ -10,6 +9,7 @@ namespace Robots.Model
     {
         public static Random random = new Random();
         private Image imgIcona = new();
+        protected Direccio Direccio { get; set; }
 
         /// <summary>
         /// Crea una nova posició
@@ -19,11 +19,11 @@ namespace Robots.Model
         public Posicio(int fil = 0, int col = 0)
         {
             InitializeComponent();
-            
+
             Columna = col;
             Fila = fil;
             dock.Children.Add(imgIcona);
-            
+
 
         }
         public static double Distancia(Posicio pos1, Posicio pos2) =>
@@ -36,7 +36,7 @@ namespace Robots.Model
                     2)
                 );
 
-        
+
         /// <summary>
         /// Assigna o obté la columna de la posicio
         /// </summary>
